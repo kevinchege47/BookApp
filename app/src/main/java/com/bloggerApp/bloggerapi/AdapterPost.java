@@ -1,6 +1,7 @@
 package com.bloggerApp.bloggerapi;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,17 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.HolderPost> {
         holder.titleTv.setText(title);
         holder.descriptionTv.setText(document.text());
         holder.publishInfoTv.setText("By"+authorName+" "+formattedDate); // e.g By Atif Pervaiz 25/10/2020 02:12 PM
+
+//        handle click,start activity wth post id
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent to start activity
+                Intent intent = new Intent(context,PostDetailsActivity.class);
+                intent.putExtra("postId",id); //key,value pair to pass to post details activity
+                context.startActivity(intent);
+            }
+        });
 
 
 
