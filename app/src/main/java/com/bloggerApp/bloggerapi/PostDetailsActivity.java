@@ -4,6 +4,7 @@ import static javax.xml.transform.OutputKeys.ENCODING;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -21,17 +22,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class PostDetailsActivity extends AppCompatActivity {
 //    Ui Views
     private TextView titleTv,publishInfoTv;
     private WebView webView;
+    private RecyclerView labelsRv;
     private String postId;//will get from intent, was passed in intent from AdapterPost
     private static final String TAG = "POST_DETAILS_TAG";
+    private ArrayList<ModelLabel> labelArrayList;
+    private AdapterLabel adapterLabel;
 //    ACTION BAR
     private ActionBar actionBar;
     @Override
@@ -48,6 +54,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         titleTv = findViewById(R.id.titleTv);
         publishInfoTv = findViewById(R.id.publishInfoTv);
         webView = findViewById(R.id.webView);
+        labelsRv = findViewById(R.id.labelsRv);
 //        will get id from intent
         postId = getIntent().getStringExtra("postId");
         Log.d(TAG, "onCreate: "+postId);
@@ -76,7 +83,7 @@ public class PostDetailsActivity extends AppCompatActivity {
                     String published = jsonObject.getString("published");
                     String content = jsonObject.getString("content");
                     String url = jsonObject.getString("url");
-                    String dispalyName = jsonObject.getJSONObject("author").getString("displayName");
+                    String displayName = jsonObject.getJSONObject("author").getString("displayName");
 
 //                    convert GMT date to proper format
                     //        format date
@@ -96,9 +103,33 @@ public class PostDetailsActivity extends AppCompatActivity {
 //                    .....set data......
                     actionBar.setSubtitle(title);
                     titleTv.setText(title);
-                    publishInfoTv.setText("By "+dispalyName+" "+formattedDate);//By Kevin Chege 08/12/2023
+                    publishInfoTv.setText("By "+displayName+" "+formattedDate);//By Kevin Chege 08/12/2023
 //                    content contains web page like html,so load in webview
                     webView.loadDataWithBaseURL(null,content,"text/html", ENCODING,null);
+//                    get labels of post
+                    try {
+//                        init and clear list before adding data
+                        labelArrayList = new ArrayList<>();
+                        labelArrayList.clear();
+
+//                        json array of labels
+                        JSONArray jsoNarray = jsonObject.getJSONArray("labels");
+                        for (int i=0;i<jsoNarray.length();i++){
+                            String label = jsoNarray.getString(i);
+//                            add label in model
+                            ModelLabel modelLabel = new ModelLabel(label);
+//                            add model in list
+                            labelArrayList.add(modelLabel);
+                        }
+//                        setup adapter
+                        adapterLabel = new AdapterLabel(PostDetailsActivity.this,labelArrayList);
+//                        set adapter to recycler view
+                        labelsRv.setAdapter(adapterLabel);
+
+                    }catch (Exception e){
+                        Log.d(TAG, "onResponse: "+e.getMessage());
+                    }
+
                 }catch (Exception e){
                     Log.d(TAG, "onResponse: "+e.getMessage());
                     Toast.makeText(PostDetailsActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
