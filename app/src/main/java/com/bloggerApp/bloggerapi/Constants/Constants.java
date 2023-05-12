@@ -1,4 +1,4 @@
-package com.bloggerApp.bloggerapi;
+package com.bloggerApp.bloggerapi.Constants;
 public class Constants {
 //    constants
     public static final String API_KEY="AIzaSyBtD3PgJ3RxrfnowEG1LEmrmTrOqpH_H1k";

@@ -1,4 +1,4 @@
-package com.bloggerApp.bloggerapi;
+package com.bloggerApp.bloggerapi.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bloggerApp.bloggerapi.Models.ModelLabel;
+import com.bloggerApp.bloggerapi.R;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.bloggerApp.bloggerapi;
+package com.bloggerApp.bloggerapi.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bloggerApp.bloggerapi.Models.ModelPost;
+import com.bloggerApp.bloggerapi.Activities.PostDetailsActivity;
+import com.bloggerApp.bloggerapi.R;
 import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
@@ -86,7 +89,7 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.HolderPost> {
             @Override
             public void onClick(View v) {
 //                Intent to start activity
-                Intent intent = new Intent(context,PostDetailsActivity.class);
+                Intent intent = new Intent(context, PostDetailsActivity.class);
                 intent.putExtra("postId",id); //key,value pair to pass to post details activity
                 context.startActivity(intent);
             }

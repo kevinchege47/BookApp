@@ -1,4 +1,4 @@
-package com.bloggerApp.bloggerapi;
+package com.bloggerApp.bloggerapi.Models;
  public class ModelPost {
 //     variables
      String authorName,content,id,published,selfLink,title,updated,url;

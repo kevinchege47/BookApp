@@ -1,4 +1,4 @@
-package com.bloggerApp.bloggerapi;
+package com.bloggerApp.bloggerapi.Models;
 public class ModelLabel {
 //    variables
     String label;

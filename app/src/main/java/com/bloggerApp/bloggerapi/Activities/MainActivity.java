@@ -1,4 +1,4 @@
-package com.bloggerApp.bloggerapi;
+package com.bloggerApp.bloggerapi.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,6 +19,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bloggerApp.bloggerapi.Adapters.AdapterPost;
+import com.bloggerApp.bloggerapi.Constants.Constants;
+import com.bloggerApp.bloggerapi.Models.ModelPost;
+import com.bloggerApp.bloggerapi.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         if (nextToken.equals("")){
             Log.d(TAG,"searchPosts:  Next Page Token is Empty,no more posts");
             url = "https://www.googleapis.com/blogger/v3/blogs/"
-                    +Constants.BLOG_ID
+                    + Constants.BLOG_ID
                     +"/posts/search?q="
                     +query
                     +"&key="+Constants.API_KEY;
