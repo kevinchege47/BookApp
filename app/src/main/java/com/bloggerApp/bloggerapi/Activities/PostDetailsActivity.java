@@ -76,7 +76,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         webView.setWebChromeClient(new WebChromeClient());
 
         loadPostDetails();
-        loadPostComments();
+//        loadPostComments();
 
     }
 
@@ -142,7 +142,7 @@ public class PostDetailsActivity extends AppCompatActivity {
                         Log.d(TAG, "onResponse: " + e.getMessage());
                     }
 //post details loaded,now load comments
-//                    loadPostComments();
+                    loadPostComments();
 
                 } catch (Exception e) {
                     Log.d(TAG, "onResponse: " + e.getMessage());
@@ -163,10 +163,13 @@ public class PostDetailsActivity extends AppCompatActivity {
     }
 
     private void loadPostComments() {
+//        Toast.makeText(this, "Inside load comments", Toast.LENGTH_SHORT).show();
         String url = "https://www.googleapis.com/blogger/v3/blogs/"
                 + Constants.BLOG_ID + "/posts/"
-                + postId + "/comments?"
+                + postId + "/comments?"+
+                "key="
                 + Constants.API_KEY;
+        Toast.makeText(this, ""+url, Toast.LENGTH_SHORT).show();
         Log.d(TAG_COMMENTS, "loadPostComments: " + url);
 //        Volley string request
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -189,13 +192,14 @@ public class PostDetailsActivity extends AppCompatActivity {
                         String id = jsonObjectComment.getString("id");
                         String published = jsonObjectComment.getString("published");
                         String content = jsonObjectComment.getString("content");
-                        String displayName = jsonObject.getJSONObject("author").getString("displayName");
-                        String profileImage = jsonObject.getJSONObject("author").getJSONObject("image").getString("url");
+                        String displayName = jsonObjectComment.getJSONObject("author").getString("displayName");
+                        String profileImage = "http:"+jsonObjectComment.getJSONObject("author").getJSONObject("image").getString("url");
                         Log.d(TAG_COMMENTS, "onResponse: " + profileImage);
 //                        add data to model
                         ModelComment modelComment = new ModelComment("" + id, "" + displayName, "" + profileImage, "" + published, "" + content);
 //                        add model to arraylist
                         modelCommentArrayList.add(modelComment);
+                        Toast.makeText(PostDetailsActivity.this, ""+displayName, Toast.LENGTH_SHORT).show();
                     }
 //                    setup adapter
                     adapterComment = new AdapterComment(PostDetailsActivity.this, modelCommentArrayList);

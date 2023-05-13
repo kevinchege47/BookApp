@@ -73,11 +73,6 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/row_comment"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-
-
-
-
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
